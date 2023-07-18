@@ -6,14 +6,13 @@ class Absen():
         self.keterangan = input("Masukkan keterangan absensi Anda: ")
         self.nilai = int(input("Masukkan nilai harian Anda: "))
         self.tanggal = input("Masukkan tanggal absensi Anda (format: YYYY-MM-DD): ")
+        self.info = None
         
     def cek_nama(self):
         if not self.name.strip():
             return "Nama tidak boleh kosong, silahkan isi terlebih dahulu."
-        elif self.name == self.name:
-            return "Silahkan lanjut isi keterangan :D"
         else:
-            return "Nama salah, silahkan coba lagi dengan benar."
+            return "Silahkan lanjut isi keterangan :D"
         
     def data_nilai(self):
         if not self.nilai:
@@ -22,6 +21,12 @@ class Absen():
             return "Remedial"
         else:
             return "Alhamdulillah"
+        
+    def cek_promosi_kelas(self):
+        if self.data_nilai() == "Alhamdulillah":
+            self.info = "naik kelas."
+        else:
+            self.info = "Maaf, Anda harus mengulang tahun depan."
             
 
 if __name__ == "__main__":
@@ -32,6 +37,8 @@ if __name__ == "__main__":
         print(result)
         cek_result = absensi.data_nilai()
         print(cek_result)
+        absensi.cek_promosi_kelas()
+        print("Status Promosi Kelas:", absensi.info)
         
         if result == "Silahkan lanjut isi keterangan :D":
             break
@@ -51,8 +58,8 @@ if __name__ == "__main__":
         cursor = connection.cursor()
 
         # Query untuk menyimpan data absensi ke dalam tabel absensi
-        query = "INSERT INTO absensi (nama, keterangan, nilai, tanggal) VALUES (%s, %s, %s, %s);"
-        data = (absensi.name, absensi.keterangan, absensi.nilai, absensi.tanggal)
+        query = "INSERT INTO absensi (nama, keterangan, nilai, tanggal, info) VALUES (%s, %s, %s, %s, %s);"
+        data = (absensi.name, absensi.keterangan, absensi.nilai, absensi.tanggal, absensi.info)
 
         cursor.execute(query, data)
         connection.commit()
