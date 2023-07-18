@@ -13,7 +13,7 @@ async def absensi():
     cur.close()
     conn.close()
     try: 
-        data = [{"Nama": row[0], "Keterangan": row[1], "Tanggal": row[2], "Nilai": row[3]} for row in result]
+        data = [{"Nama": row[0], "Keterangan": row[1], "Tanggal": row[2], "Nilai": row[3], "Info": row[4]} for row in result]
     except ZeroDivisionError as e:
         return HTTPException(status_code=400, detail=str(e))
     return {
