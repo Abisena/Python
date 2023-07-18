@@ -68,7 +68,7 @@ if __name__ == "__main__":
         cursor = connection.cursor()
 
         # Query untuk menyimpan data absensi ke dalam tabel absensi
-        query = "INSERT INTO absensi (nama, keterangan, nilai, tanggal, info) VALUES (%s, %s, %s, %s, %s);"
+        query = "INSERT INTO new_absen (nama, keterangan, nilai, tanggal, info) VALUES (%s, %s, %s, %s, %s);"
         data = (absensi.name, absensi.keterangan, absensi.nilai, absensi.tanggal, absensi.info)
 
         cursor.execute(query, data)
