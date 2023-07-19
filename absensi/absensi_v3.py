@@ -15,6 +15,7 @@ class Absen():
                         'tanggal': row.get('tanggal'),
                         'info': None
                     })
+                    
 
     def cek_nama(self):
         for entry in self.data:
