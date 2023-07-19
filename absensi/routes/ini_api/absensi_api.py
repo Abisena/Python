@@ -7,7 +7,7 @@ router = APIRouter()
 async def absensi():
     conn = create_conn()
     cur = conn.cursor()
-    cur.execute("SELECT * from absensi")
+    cur.execute("SELECT * from new_absen")
     # The method used when you want to display everything is fetchall and to display just one it is fetchone
     result = cur.fetchall()
     cur.close()
