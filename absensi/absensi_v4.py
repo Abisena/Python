@@ -3,7 +3,7 @@ import psycopg2
 
 class Absen():
     def __init__(self, csv_file=None):
-        self.data = []  # List to store multiple rows of data
+        self.data = [] 
         if csv_file:
             with open(csv_file, newline='') as csvfile:
                 reader = csv.DictReader(csvfile)
@@ -52,7 +52,6 @@ class Absen():
                 print(f"{count} data dengan nama '{name_to_delete}' siap untuk dihapus.")
                 confirm = input("Apakah Anda yakin ingin menghapus data tersebut di database? (y/n): ")
                 if confirm.lower() == 'y':
-                    # Perform deletion in the database
                     try:
                         connection = psycopg2.connect(
                             user="postgres",
@@ -64,7 +63,6 @@ class Absen():
 
                         cursor = connection.cursor()
 
-                        # Get the primary key values of the rows to delete
                         ids_to_delete = [item['tanggal'] for item in delete_list]
 
                         delete_query = "DELETE FROM new_absen WHERE tanggal IN %s;"
@@ -83,7 +81,6 @@ class Absen():
                             print("Koneksi ke database ditutup.")
                 else:
                     print("Penghapusan data di database dibatalkan.")
-                # Remove the deleted entries from self.data
                 for item in delete_list:
                     self.data.remove(item)
             else:
@@ -102,12 +99,9 @@ class Absen():
                 entry[field_to_update] = new_value
             updated_data.append(entry)
 
-        # Update self.data with the updated data
         self.data = updated_data
 
         print(f"Data dengan nama '{name_to_update}' berhasil diupdate pada field {field_to_update}.")
-
-    # ... (previous code)
 
 if __name__ == "__main__":
     csv_file_path = input("Masukkan path file CSV (kosongkan jika ingin input manual): ")
@@ -131,7 +125,6 @@ if __name__ == "__main__":
         if cek_result == "Terima Kasih Sudah Mengisi :)":
             break
 
-    # Menyimpan data ke dalam database PostgreSQL
     try:
         connection = psycopg2.connect(
             user="postgres",
@@ -143,7 +136,6 @@ if __name__ == "__main__":
 
         cursor = connection.cursor()
 
-        # Query untuk menyimpan data absensi ke dalam tabel absensi
         query = "INSERT INTO new_absen (nama, keterangan, nilai, tanggal, info) VALUES (%s, %s, %s, %s, %s);"
 
         for entry in absensi.data:
